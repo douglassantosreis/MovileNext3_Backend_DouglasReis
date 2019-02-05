@@ -2,7 +2,6 @@ package com.dgssr.findrestaurants.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,10 +33,6 @@ public class AddressController {
 	@RequestMapping(value = "/by-restaurant-latitude-longetude/{restaurantId},{latitude},{longitude}", method = RequestMethod.GET)
 	public ResponseEntity<Address> getByRestaurantLatitudeLongetude(@PathVariable Integer restaurantId,
 			@PathVariable String latitude, @PathVariable String longitude) {
-		
-		System.out.println(restaurantId);
-		System.out.println(latitude);
-		System.out.println(longitude);
 		return addressService.findByRestaurantAndLatitudeAndLongitude(restaurantId, latitude, longitude)
 				.map(addresses -> ResponseEntity.ok(addresses)).orElse(ResponseEntity.notFound().build());
 	}
