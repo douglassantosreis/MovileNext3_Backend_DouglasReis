@@ -1,6 +1,7 @@
 package com.dgssr.findrestaurants.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,14 @@ public class AddressServiceImpl implements AddressService {
 		return (List<Address>) addressRepository.findAll();
 	}
 
+	@Override
+	public Optional<Address> findByLatitudeAndLongitude(String latitude, String longitude) {
+		return addressRepository.findByLatitudeAndLongitude(latitude, longitude);
+	}
+
+	@Override
+	public Optional<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude,
+			String longitude) {
+		return addressRepository.findByRestaurantAndLatitudeAndLongitude(restaurantId, latitude, longitude);
+	}
 }
