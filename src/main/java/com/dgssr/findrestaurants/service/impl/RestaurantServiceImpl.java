@@ -10,19 +10,32 @@ import com.dgssr.findrestaurants.model.Restaurant;
 import com.dgssr.findrestaurants.repository.RestaurantRepository;
 import com.dgssr.findrestaurants.service.RestaurantService;
 
+import javassist.NotFoundException;
+
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-	
+
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
 	@Override
-	public List<Restaurant> findAll() {
-		return (List<Restaurant>) restaurantRepository.findAll();
+	public List<Restaurant> findAll() throws NotFoundException, Exception {
+		List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
+
+		if (restaurants.isEmpty())
+			throw new NotFoundException("Não foi encontrado nenhum restaurante");
+
+		return restaurants;
 	}
 
 	@Override
-	public Optional<Restaurant> findById(Integer restaurantId) {
-		return restaurantRepository.findById(restaurantId);
+	public Restaurant findById(Integer restaurantId) throws NotFoundException, Exception {
+		Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
+
+		if (restaurant.isPresent()) {
+			return restaurant.get();
+		} else {
+			throw new NotFoundException("Não foi encontrado o restaurante");
+		}
 	}
 }

@@ -1,17 +1,18 @@
 package com.dgssr.findrestaurants.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.dgssr.findrestaurants.model.Address;
 
+import javassist.NotFoundException;
+
 public interface AddressService {
 
-	public List<Address> findAll();
+	public List<Address> findAll() throws NotFoundException, Exception;
 
-	public Optional<Address> findByLatitudeAndLongitude(String latitude, String longitude);
+	public List<Address> findByLatitudeAndLongitude(String latitude, String longitude) throws NotFoundException, Exception;
 	
-	public Optional<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude, String longitude);
+	public List<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude, String longitude) throws NotFoundException, Exception;
 
 	
 

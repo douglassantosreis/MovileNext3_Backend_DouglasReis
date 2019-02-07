@@ -1,13 +1,15 @@
 package com.dgssr.findrestaurants.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.dgssr.findrestaurants.model.Restaurant;
 
+import javassist.NotFoundException;
+
 public interface RestaurantService {
 
-	public List<Restaurant> findAll();
-	public Optional<Restaurant> findById(Integer restaurantId);
+	public List<Restaurant> findAll() throws NotFoundException, Exception;
+
+	public Restaurant findById(Integer restaurantId) throws NotFoundException, Exception;
 
 }

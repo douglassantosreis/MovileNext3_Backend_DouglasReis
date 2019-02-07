@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,7 @@ public interface AddressRepository extends CrudRepository<Address, Integer> {
 			  		") AS distance \r\n" + 
 			  		"FROM find_restaurants.address HAVING distance < 25", 
 			  nativeQuery = true)
-	public Optional<Address> findByLatitudeAndLongitude(String latitude, String longitude);
+	public Optional<List<Address>> findByLatitudeAndLongitude(String latitude, String longitude);
 	
 	@Query(
 			  value = "SELECT *,\r\n" + 
@@ -35,6 +36,6 @@ public interface AddressRepository extends CrudRepository<Address, Integer> {
 			  		") AS distance \r\n" + 
 			  		"FROM find_restaurants.address where restaurant_id = ?1 HAVING distance < 25", 
 			  nativeQuery = true)
-	public Optional<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude, String longitude);
+	public Optional<List<Address>> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude, String longitude);
 
 }

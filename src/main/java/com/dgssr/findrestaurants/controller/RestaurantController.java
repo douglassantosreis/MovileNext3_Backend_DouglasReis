@@ -1,32 +1,47 @@
 package com.dgssr.findrestaurants.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.dgssr.findrestaurants.model.Restaurant;
 import com.dgssr.findrestaurants.service.RestaurantService;
 
-@RestController
+import javassist.NotFoundException;
+
+@Controller
 @RequestMapping(path = "/restaurant")
 public class RestaurantController {
-	
+
 	@Autowired
 	private RestaurantService restaurantService;
 
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public @ResponseBody Iterable<Restaurant> getAll() {
-		return restaurantService.findAll();
+	@GetMapping(path = "/all")
+	public @ResponseBody ResponseEntity<?> getAll() {
+		try {
+			return ResponseEntity.ok(restaurantService.findAll());
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>("Não foi encontrado nenhum restaurante", HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
-	@RequestMapping(value = "/{restaurantId}", method = RequestMethod.GET)
-	public ResponseEntity<Restaurant> getById(@PathVariable Integer restaurantId) {
-		return restaurantService.findById(restaurantId)
-						.map(restaurant -> ResponseEntity.ok(restaurant))
-						.orElse(ResponseEntity.notFound().build());
+
+	@GetMapping(path = "/{restaurantId}")
+	public @ResponseBody ResponseEntity<?> getById(@PathVariable Integer restaurantId) {
+
+		try {
+			return ResponseEntity.ok(restaurantService.findById(restaurantId));
+
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>("Não foi encontrado nenhum restaurante", HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.SERVICE_UNAVAILABLE);
+		}
+
 	}
 }
