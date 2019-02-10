@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.model;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -53,38 +54,8 @@ public class Address {
 		super();
 	}
 
-	public Address(Integer id, String street, String number, String zipCode, String district, String city,
-			String country, double latitude, double longitude, String complement) {
-		super();
-		this.id = id;
-		this.street = street;
-		this.number = number;
-		this.zipCode = zipCode;
-		this.district = district;
-		this.city = city;
-		this.country = country;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.complement = complement;
-	}
-
-	public Address(Integer id, String street, String number, String zipCode, String district, String city,
-			String country, double latitude, double longitude, String complement, Restaurant restaurant, Date createdAt,
-			Date updatedAt) {
-		super();
-		this.id = id;
-		this.street = street;
-		this.number = number;
-		this.zipCode = zipCode;
-		this.district = district;
-		this.city = city;
-		this.country = country;
-		this.latitude = latitude;
-		this.longitude = longitude;
-		this.complement = complement;
-		this.restaurant = restaurant;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+	public boolean isOpen() {
+		return restaurant.getOpen().isBefore(LocalTime.now()) && restaurant.getClose().isAfter(LocalTime.now());
 	}
 
 	/**
@@ -127,34 +98,6 @@ public class Address {
 	 */
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
-	}
-
-	/**
-	 * @return the createdAt
-	 */
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	/**
-	 * @param createdAt the createdAt to set
-	 */
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the updatedAt
-	 */
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	/**
-	 * @param updatedAt the updatedAt to set
-	 */
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	/**

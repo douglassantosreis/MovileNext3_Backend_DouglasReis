@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.model;
 
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +29,15 @@ public class Restaurant {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String name;
-	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL) 
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Address> adresses;
-	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL) 
+	@OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Contact> contacts;
+
+	private LocalTime open;
+	private LocalTime close;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -49,31 +53,9 @@ public class Restaurant {
 		super();
 	}
 
-	public Restaurant(Integer id, String name, List<Address> adresses, List<Contact> contacts) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.adresses = adresses;
-		this.contacts = contacts;
-	}
-	
 	public Restaurant(Integer id) {
 		super();
 		this.id = id;
-	}
-
-	public Restaurant(Integer id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-
-	public Restaurant(Integer id, String name, Date createdAt, Date updatedAt) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	/**
@@ -130,6 +112,22 @@ public class Restaurant {
 	 */
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
+	}
+
+	public LocalTime getOpen() {
+		return open;
+	}
+
+	public void setOpen(LocalTime open) {
+		this.open = open;
+	}
+
+	public LocalTime getClose() {
+		return close;
+	}
+
+	public void setClose(LocalTime close) {
+		this.close = close;
 	}
 
 }

@@ -26,7 +26,7 @@ public class AddressServiceImpl implements AddressService {
 		List<Address> addresses = (List<Address>) addressRepository.findAll();
 
 		if (addresses.isEmpty())
-			throw new AddressNotFoundException("Não foi encontrado nenhum endereço");
+			throw new AddressNotFoundException("Nenhum resturante encontrado");
 
 		return addresses;
 	}
@@ -52,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
 		if (addresses.isPresent()) {
 			return validateAdressesList(addresses.get(), inputSearch);
 		} else {
-			throw new AddressNotFoundException("Não foi encontrado nenhum endereço");
+			throw new AddressNotFoundException("Nenhum resturante encontrado");
 		}
 	}
 
@@ -60,19 +60,24 @@ public class AddressServiceImpl implements AddressService {
 			throws AddressNotFoundException {
 
 		if (addresses.isEmpty()) {
-			throw new AddressNotFoundException("Não foi encontrado nenhum endereço");
+			throw new AddressNotFoundException("Nenhum resturante encontrado");
 		} else {
+
 			List<Address> addressesReturn = new ArrayList<Address>();
 			addresses.forEach(address -> {
-				if (Haversine.distance(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
-						address.getLongitude()) < inputSearch.getMaxKilometers()) {
+				if(checkIfRestaurantIsElegible(inputSearch, address)) {
 					addressesReturn.add(address);
 				}
 			});
 			if (addressesReturn.isEmpty()) {
-				throw new AddressNotFoundException("Não foi encontrado nenhum endereço");
+				throw new AddressNotFoundException("Nenhum resturante encontrado");
 			}
 			return addressesReturn;
 		}
+	}
+
+	public boolean checkIfRestaurantIsElegible(InputSearch inputSearch, Address address) {
+		return (Haversine.distance(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
+				address.getLongitude()) < inputSearch.getMaxKilometers()) && address.isOpen();
 	}
 }

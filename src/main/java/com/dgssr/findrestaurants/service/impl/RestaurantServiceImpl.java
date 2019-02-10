@@ -17,11 +17,10 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 	@Autowired
 	private RestaurantRepository restaurantRepository;
-
+	
 	@Override
 	public List<Restaurant> findAll() {
 		List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
-
 		if (restaurants.isEmpty())
 			throw new RestaurantNotFoundException("Não foi encontrado nenhum restaurante");
 

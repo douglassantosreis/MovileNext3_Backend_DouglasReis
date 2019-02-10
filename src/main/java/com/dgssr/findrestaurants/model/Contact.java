@@ -45,23 +45,6 @@ public class Contact {
 		super();
 	}
 
-	public Contact(Integer id, String name, String type, String number) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.number = number;
-	}
-	
-	public Contact(Integer id, String name, String type, String number, Integer restaurantId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.number = number;
-		this.restaurant = new Restaurant(restaurantId);
-	}
-
 	/**
 	 * @return the id
 	 */
@@ -131,33 +114,4 @@ public class Contact {
 	public void setRestaurant(Restaurant restaurant) {
 		this.restaurant = restaurant;
 	}
-
-	/**
-	 * @return the createdAt
-	 */
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	/**
-	 * @param createdAt the createdAt to set
-	 */
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	/**
-	 * @return the updatedAt
-	 */
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	/**
-	 * @param updatedAt the updatedAt to set
-	 */
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
 }
