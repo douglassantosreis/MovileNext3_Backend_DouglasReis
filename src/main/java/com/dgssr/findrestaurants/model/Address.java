@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,6 +19,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "ADDRESS")
 public class Address {
 
 	@Id
@@ -29,8 +31,8 @@ public class Address {
 	private String district;
 	private String city;
 	private String country;
-	private String latitude;
-	private String longitude;
+	private double latitude;
+	private double longitude;
 	private String complement;
 	@ManyToOne
 	@JoinColumn(name = "restaurant_id", nullable = false, referencedColumnName = "id")
@@ -52,7 +54,7 @@ public class Address {
 	}
 
 	public Address(Integer id, String street, String number, String zipCode, String district, String city,
-			String country, String latitude, String longitude, String complement) {
+			String country, double latitude, double longitude, String complement) {
 		super();
 		this.id = id;
 		this.street = street;
@@ -67,7 +69,7 @@ public class Address {
 	}
 
 	public Address(Integer id, String street, String number, String zipCode, String district, String city,
-			String country, String latitude, String longitude, String complement, Restaurant restaurant, Date createdAt,
+			String country, double latitude, double longitude, String complement, Restaurant restaurant, Date createdAt,
 			Date updatedAt) {
 		super();
 		this.id = id;
@@ -88,28 +90,28 @@ public class Address {
 	/**
 	 * @return the latitude
 	 */
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
 	/**
 	 * @param latitude the latitude to set
 	 */
-	public void setLatitude(String latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
 	/**
 	 * @return the longitude
 	 */
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
 	/**
 	 * @param longitude the longitude to set
 	 */
-	public void setLongitude(String longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

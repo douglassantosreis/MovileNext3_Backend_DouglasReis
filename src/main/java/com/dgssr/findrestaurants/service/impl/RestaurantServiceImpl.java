@@ -6,11 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dgssr.findrestaurants.exception.InvalidInputRestaurantException;
+import com.dgssr.findrestaurants.exception.RestaurantNotFoundException;
 import com.dgssr.findrestaurants.model.Restaurant;
 import com.dgssr.findrestaurants.repository.RestaurantRepository;
 import com.dgssr.findrestaurants.service.RestaurantService;
-
-import javassist.NotFoundException;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -19,23 +19,27 @@ public class RestaurantServiceImpl implements RestaurantService {
 	private RestaurantRepository restaurantRepository;
 
 	@Override
-	public List<Restaurant> findAll() throws NotFoundException, Exception {
+	public List<Restaurant> findAll() {
 		List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
 
 		if (restaurants.isEmpty())
-			throw new NotFoundException("Não foi encontrado nenhum restaurante");
+			throw new RestaurantNotFoundException("Não foi encontrado nenhum restaurante");
 
 		return restaurants;
 	}
 
 	@Override
-	public Restaurant findById(Integer restaurantId) throws NotFoundException, Exception {
+	public Restaurant findById(Integer restaurantId) {
+
+		if (restaurantId == null)
+			throw new InvalidInputRestaurantException("Necessário passar um código de restaurante");
+		
 		Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 
 		if (restaurant.isPresent()) {
 			return restaurant.get();
 		} else {
-			throw new NotFoundException("Não foi encontrado o restaurante");
+			throw new RestaurantNotFoundException("Não foi encontrado o restaurante");
 		}
 	}
 }

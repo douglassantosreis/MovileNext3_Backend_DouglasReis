@@ -4,15 +4,13 @@ import java.util.List;
 
 import com.dgssr.findrestaurants.model.Address;
 
-import javassist.NotFoundException;
-
 public interface AddressService {
 
-	public List<Address> findAll() throws NotFoundException, Exception;
+	public List<Address> findAll();
 
-	public List<Address> findByLatitudeAndLongitude(String latitude, String longitude) throws NotFoundException, Exception;
+	public List<Address> findByLatitudeAndLongitude(double latitude, double longitude, double maxKilometer);
 	
-	public List<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, String latitude, String longitude) throws NotFoundException, Exception;
+	public List<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, double latitude, double longitude, double maxKilometer);
 
 	
 
