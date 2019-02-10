@@ -12,23 +12,88 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.dgssr.findrestaurants.exception.InvalidInputSearchAddressException;
 import com.dgssr.findrestaurants.model.Address;
+import com.dgssr.findrestaurants.model.InputSearch;
 import com.dgssr.findrestaurants.model.Restaurant;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AddressTests {
+public class InputSearchTests {
 
 	@Test
 	public void contextLoads() {
 	}
 
 	@Test
-	public void shouldBeAddressIsWithId() {
-		Address address = new Address();
-		address.setId(1);
-		assertEquals(address.getId().intValue(), 1);
+	public void shouldBeInputSearchIsWithLatitudeAndLongitude() {
+		double latitude = -23.142321;
+		double longitude = -26.32434;
+		
+		InputSearch inputSearch = new InputSearch.InputSearchBuilder()
+									.addLatitude(latitude)
+									.addLongitude(longitude).build();
+		
+		assertTrue(inputSearch.getLatitude() == latitude);
+		assertTrue(inputSearch.getLongitude() == longitude);
+
 	}
+	
+	@Test(expected=InvalidInputSearchAddressException.class)
+	public void shouldBeInputSearchThrowInvalidInputSearchAddressExceptionWhenIdNull() {
+		double latitude = -23.142321;
+		double longitude = -26.32434;
+		double maxKilometers = 25;
+		new InputSearch.InputSearchBuilder()
+									.addRestaurantId(null)
+									.addLatitude(latitude)
+									.addLongitude(longitude)
+									.addMaxKilometers(maxKilometers).build();
+	}
+	
+	@Test
+	public void shouldBeInputSearchComplete() {
+		double latitude = -23.142321;
+		double longitude = -26.32434;
+		double maxKilometers = 25;
+		InputSearch inputSearch = new InputSearch.InputSearchBuilder()
+									.addRestaurantId(1)
+									.addLatitude(latitude)
+									.addLongitude(longitude)
+									.addMaxKilometers(maxKilometers).build();
+		
+		assertTrue(inputSearch.getLatitude() == latitude);
+		assertTrue(inputSearch.getLongitude() == longitude);
+		assertEquals(inputSearch.getRestaurantId().intValue(), 1);
+		assertTrue(inputSearch.getMaxKilometers() == maxKilometers);
+	}
+	
+	@Test
+	public void shouldBeInputSearchIsWithLatitudeAndLongitudeAndMaxKilometers() {
+		double latitude = -23.142321;
+		double longitude = -26.32434;
+		double maxKilometers = 25;
+		InputSearch inputSearch = new InputSearch.InputSearchBuilder()
+									.addLatitude(latitude)
+									.addLongitude(longitude)
+									.addMaxKilometers(maxKilometers).build();
+		
+		assertTrue(inputSearch.getMaxKilometers() == maxKilometers);
+	}
+	
+	@Test(expected=InvalidInputSearchAddressException.class)
+	public void shouldBeThrowInvalidInputSearchAddressExceptionWhenCheckIfICanContinueUseSearch() {
+		new InputSearch().checkIfICanContinueUseSearch();
+	}
+	
+	@Test
+	public void shouldBeCheckIfICanContinueUseSearchOk() {
+		new InputSearch.InputSearchBuilder()
+									.addLatitude(-23.211321)
+									.addLongitude(-32.1421).build()
+									.checkIfICanContinueUseSearch();
+	}
+
 
 	@Test
 	public void shouldBeAddressIsWithCity() {

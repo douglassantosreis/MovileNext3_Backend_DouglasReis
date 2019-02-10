@@ -29,10 +29,6 @@ public class InputSearch implements Serializable {
 		return restaurantId;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public void checkIfICanContinueUseSearch() {
 		if (latitude == 0 || longitude == 0) {
 			throw new InvalidInputSearchAddressException("Alguns desses parameteros não foram encontrados " + "LATITUDE: "
