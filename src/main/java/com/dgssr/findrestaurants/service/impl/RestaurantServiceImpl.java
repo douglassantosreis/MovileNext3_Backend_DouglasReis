@@ -20,11 +20,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	
 	@Override
 	public List<Restaurant> findAll() {
-		List<Restaurant> restaurants = (List<Restaurant>) restaurantRepository.findAll();
-		if (restaurants.isEmpty())
-			throw new RestaurantNotFoundException("Não foi encontrado nenhum restaurante");
-
-		return restaurants;
+		return (List<Restaurant>) restaurantRepository.findAll();
 	}
 
 	@Override
@@ -38,7 +34,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 		if (restaurant.isPresent()) {
 			return restaurant.get();
 		} else {
-			throw new RestaurantNotFoundException("Não foi encontrado o restaurante");
+			throw new RestaurantNotFoundException("Nenhum restaurante encontrado");
 		}
 	}
 }

@@ -24,10 +24,7 @@ public class AddressServiceImpl implements AddressService {
 	public List<Address> findAll() {
 
 		List<Address> addresses = (List<Address>) addressRepository.findAll();
-
-		if (addresses.isEmpty())
-			throw new AddressNotFoundException("Nenhum resturante encontrado");
-
+		
 		return addresses;
 	}
 
@@ -52,28 +49,22 @@ public class AddressServiceImpl implements AddressService {
 		if (addresses.isPresent()) {
 			return validateAdressesList(addresses.get(), inputSearch);
 		} else {
-			throw new AddressNotFoundException("Nenhum resturante encontrado");
+			return new ArrayList<Address>();
 		}
 	}
 
 	public List<Address> validateAdressesList(List<Address> addresses, InputSearch inputSearch)
 			throws AddressNotFoundException {
 
-		if (addresses.isEmpty()) {
-			throw new AddressNotFoundException("Nenhum resturante encontrado");
-		} else {
-
-			List<Address> addressesReturn = new ArrayList<Address>();
-			addresses.forEach(address -> {
-				if(checkIfRestaurantIsElegible(inputSearch, address)) {
-					addressesReturn.add(address);
-				}
-			});
-			if (addressesReturn.isEmpty()) {
-				throw new AddressNotFoundException("Nenhum resturante encontrado");
+		List<Address> addressesReturn = new ArrayList<Address>();
+		addresses.forEach(address -> {
+			if (checkIfRestaurantIsElegible(inputSearch, address)) {
+				addressesReturn.add(address);
 			}
-			return addressesReturn;
-		}
+		});
+		
+		return addressesReturn;
+
 	}
 
 	public boolean checkIfRestaurantIsElegible(InputSearch inputSearch, Address address) {

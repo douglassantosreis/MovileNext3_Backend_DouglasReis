@@ -2,9 +2,9 @@ package com.dgssr.findrestaurants.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,15 +22,15 @@ public class AddressController {
 		return ResponseEntity.ok(addressService.findAll());
 	}
 
-	@RequestMapping(value = "/by-latitude-longetude/{latitude},{longitude},{maxKilometer}", method = RequestMethod.GET)
-	public ResponseEntity<?> getByLatitudeLongetude(@PathVariable double latitude, @PathVariable double longitude,
-			@PathVariable double maxKilometer) {
+	@RequestMapping(value = "/find/", method = RequestMethod.GET)
+	public ResponseEntity<?> getByLatitudeLongetude(@RequestParam("lat") double latitude, @RequestParam("lon") double longitude,
+			@RequestParam("mx") double maxKilometer) {
 		return ResponseEntity.ok(addressService.findByLatitudeAndLongitude(latitude, longitude, maxKilometer));
 	}
 
-	@RequestMapping(value = "/by-restaurant-latitude-longetude/{restaurantId},{latitude},{longitude},{maxKilometers}", method = RequestMethod.GET)
-	public ResponseEntity<?> getByRestaurantLatitudeLongetude(@PathVariable Integer restaurantId,
-			@PathVariable double latitude, @PathVariable double longitude, @PathVariable double maxKilometer) {
+	@RequestMapping(value = "/find/filter/", method = RequestMethod.GET)
+	public ResponseEntity<?> getByRestaurantLatitudeLongetude(@RequestParam("id") Integer restaurantId,
+			@RequestParam("lat") double latitude, @RequestParam("lon") double longitude, @RequestParam("mx") double maxKilometer) {
 		return ResponseEntity.ok(addressService.findByRestaurantAndLatitudeAndLongitude(restaurantId, latitude,
 				longitude, maxKilometer));
 	}
