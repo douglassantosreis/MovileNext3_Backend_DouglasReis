@@ -12,10 +12,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.dgssr.findrestaurants.exception.InvalidInputSearchAddressException;
-import com.dgssr.findrestaurants.model.Address;
-import com.dgssr.findrestaurants.model.InputSearch;
-import com.dgssr.findrestaurants.model.Restaurant;
+import com.dgssr.findrestaurants.domain.Address;
+import com.dgssr.findrestaurants.domain.InputSearch;
+import com.dgssr.findrestaurants.domain.Restaurant;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputSearchAddressException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

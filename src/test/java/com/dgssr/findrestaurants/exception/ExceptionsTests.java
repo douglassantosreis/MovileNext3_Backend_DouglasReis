@@ -7,6 +7,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.dgssr.findrestaurants.infrastructure.exceptions.AddressNotFoundException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.ContactNotFoundException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputRestaurantException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputSearchAddressException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.RestaurantNotFoundException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ExceptionsTests {

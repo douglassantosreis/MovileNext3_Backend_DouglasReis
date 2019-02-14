@@ -8,6 +8,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.dgssr.findrestaurants.infrastructure.Haversine;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class HaversineTests {
