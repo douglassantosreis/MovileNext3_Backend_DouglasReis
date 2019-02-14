@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.dgssr.findrestaurants.application.service.AddressService;
 import com.dgssr.findrestaurants.domain.Address;
 import com.dgssr.findrestaurants.domain.InputSearch;
-import com.dgssr.findrestaurants.infrastructure.Haversine;
 import com.dgssr.findrestaurants.infrastructure.exceptions.AddressNotFoundException;
 import com.dgssr.findrestaurants.infrastructure.repositories.AddressRepository;
+import com.dgssr.findrestaurants.infrastructure.utilities.Haversine;
 
 @Service
 public class AddressServiceImpl implements AddressService {

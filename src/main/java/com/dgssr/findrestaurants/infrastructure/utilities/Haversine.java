@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.infrastructure;
+package com.dgssr.findrestaurants.infrastructure.utilities;
 
 public class Haversine {
 	private static final int EARTH_RADIUS = 6371;
