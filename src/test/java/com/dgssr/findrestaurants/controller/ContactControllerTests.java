@@ -1,6 +1,5 @@
 package com.dgssr.findrestaurants.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -60,7 +59,7 @@ public class ContactControllerTests {
 
 	@Test
 	public void shouldFindAllContacts() throws Exception {
-		
+
 		String result = this.mockMvc.perform(get("/contacts/")).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
 				.getContentAsString();
@@ -71,15 +70,6 @@ public class ContactControllerTests {
 
 		assertNotNull(contacts);
 		assertNotNull(contacts.size() > 0);
-		assertEquals(contacts.get(0).getId(), new Integer(1));
-		assertEquals(contacts.get(0).getName(), "Douglas");
-		assertEquals(contacts.get(0).getType(), "1");
-		assertEquals(contacts.get(0).getNumber(), "1");
-		assertNotNull(contacts.get(0).getRestaurant());
-		assertEquals(contacts.get(0).getRestaurant().getId(), new Integer(1));
-		assertEquals(contacts.get(0).getRestaurant().getName(), "Metro Capão");
-		assertEquals(contacts.get(0).getRestaurant().getOpen(), LocalTime.of(9, 0, 0));
-		assertEquals(contacts.get(0).getRestaurant().getClose(), LocalTime.of(22, 0, 0));
 
 	}
 

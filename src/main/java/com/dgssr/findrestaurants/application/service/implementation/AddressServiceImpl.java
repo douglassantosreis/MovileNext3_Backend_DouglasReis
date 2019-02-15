@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.dgssr.findrestaurants.application.service.AddressService;
 import com.dgssr.findrestaurants.domain.Address;
 import com.dgssr.findrestaurants.domain.InputSearch;
-import com.dgssr.findrestaurants.infrastructure.exceptions.AddressNotFoundException;
 import com.dgssr.findrestaurants.infrastructure.repositories.AddressRepository;
 import com.dgssr.findrestaurants.infrastructure.utilities.Haversine;
 
@@ -22,10 +21,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public List<Address> findAll() {
-
-		List<Address> addresses = (List<Address>) addressRepository.findAll();
-		
-		return addresses;
+		return (List<Address>) addressRepository.findAll();
 	}
 
 	@Override
@@ -33,16 +29,25 @@ public class AddressServiceImpl implements AddressService {
 
 		List<Address> addresses = (List<Address>) addressRepository.findAll();
 
-		return validateAdressesList(addresses, new InputSearch.InputSearchBuilder().addLatitude(latitude)
-				.addLongitude(longitude).addMaxKilometers(maxKilometers).build());
+		InputSearch inputSearch = new InputSearch
+										.InputSearchBuilder()
+										.addLatitude(latitude)
+										.addLongitude(longitude)
+										.addMaxKilometers(maxKilometers).build();
+
+		return validateAdressesList(addresses, inputSearch);
 	}
 
 	@Override
 	public List<Address> findByRestaurantAndLatitudeAndLongitude(Integer restaurantId, double latitude,
 			double longitude, double maxKilometers) {
 
-		InputSearch inputSearch = new InputSearch.InputSearchBuilder().addLatitude(latitude).addLongitude(longitude)
-				.addMaxKilometers(maxKilometers).addRestaurantId(restaurantId).build();
+		InputSearch inputSearch = new InputSearch
+										.InputSearchBuilder()
+										.addLatitude(latitude)
+										.addLongitude(longitude)
+										.addMaxKilometers(maxKilometers)
+										.addRestaurantId(restaurantId).build();
 
 		Optional<List<Address>> addresses = addressRepository.findByRestaurantId(inputSearch.getRestaurantId());
 
@@ -53,8 +58,7 @@ public class AddressServiceImpl implements AddressService {
 		}
 	}
 
-	public List<Address> validateAdressesList(List<Address> addresses, InputSearch inputSearch)
-			throws AddressNotFoundException {
+	public List<Address> validateAdressesList(List<Address> addresses, InputSearch inputSearch) {
 
 		List<Address> addressesReturn = new ArrayList<Address>();
 		addresses.forEach(address -> {
@@ -62,7 +66,7 @@ public class AddressServiceImpl implements AddressService {
 				addressesReturn.add(address);
 			}
 		});
-		
+
 		return addressesReturn;
 
 	}

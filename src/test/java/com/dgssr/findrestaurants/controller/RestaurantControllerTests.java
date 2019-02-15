@@ -1,6 +1,5 @@
 package com.dgssr.findrestaurants.controller;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -71,7 +70,6 @@ public class RestaurantControllerTests {
 
 		assertNotNull(restaurants);
 		assertNotNull(restaurants.size() > 0);
-		assertPatternForRestaurants(restaurants.get(0));
 
 	}
 
@@ -84,16 +82,7 @@ public class RestaurantControllerTests {
 
 		Restaurant restaurant = gson.fromJson(result, Restaurant.class);
 
-		assertPatternForRestaurants(restaurant);
-
-	}
-
-	private void assertPatternForRestaurants(Restaurant restaurant) {
 		assertNotNull(restaurant);
-		assertEquals(restaurant.getId(), new Integer(1));
-		assertEquals(restaurant.getName(), "Metro Capão");
-		assertEquals(restaurant.getOpen(), LocalTime.of(9, 0, 0));
-		assertEquals(restaurant.getClose(), LocalTime.of(22, 0, 0));
 	}
 
 }
