@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.controller;
+package com.dgssr.findrestaurants.application.integration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,14 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.dgssr.findrestaurants.domain.Restaurant;
+import com.dgssr.findrestaurants.domain.Address;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RestaurantControllerTests {
+public class AddressControllerTests {
 
 	@Autowired
 	private WebApplicationContext wac;
@@ -49,40 +49,58 @@ public class RestaurantControllerTests {
 	}
 
 	@Test
-	public void givenWacWhenServletContextThenItProvidesContactController() {
+	public void givenWacWhenServletContextThenItProvidesAddressController() {
 		ServletContext servletContext = wac.getServletContext();
 
 		Assert.assertNotNull(servletContext);
 		Assert.assertTrue(servletContext instanceof MockServletContext);
-		Assert.assertNotNull(wac.getBean("restaurantController"));
+		Assert.assertNotNull(wac.getBean("addressController"));
 	}
 
 	@Test
-	public void shouldFindAllRestaurants() throws Exception {
+	public void shouldBeFindAllContacts() throws Exception {
 
-		String result = this.mockMvc.perform(get("/restaurants/")).andExpect(status().isOk())
+		String result = this.mockMvc.perform(get("/addresses/")).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
 				.getContentAsString();
 
-		Restaurant[] restaurantsArray = gson.fromJson(result, Restaurant[].class);
+		Address[] addressesArray = gson.fromJson(result, Address[].class);
 
-		List<Restaurant> restaurants = Arrays.asList(restaurantsArray);
+		List<Address> addresses = Arrays.asList(addressesArray);
 
-		assertNotNull(restaurants);
-		assertNotNull(restaurants.size() > 0);
-
+		assertNotNull(addresses);
+		assertNotNull(addresses.size() > 0);
 	}
-
+	
 	@Test
-	public void shouldFindOnRestaurantById() throws Exception {
+	public void shouldBeFindAllContactsByLatitudeLongitudeMaxKilometers() throws Exception {
 
-		String result = this.mockMvc.perform(get("/restaurants/1")).andExpect(status().isOk())
+		String result = this.mockMvc.perform(get("/addresses/find/?lat=-23.6864837&lon=-46.7800381&mx=25")).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
 				.getContentAsString();
 
-		Restaurant restaurant = gson.fromJson(result, Restaurant.class);
+		Address[] addressesArray = gson.fromJson(result, Address[].class);
 
-		assertNotNull(restaurant);
+		List<Address> addresses = Arrays.asList(addressesArray);
+
+		assertNotNull(addresses);
+		assertNotNull(addresses.size() > 0);
 	}
+	
+	@Test
+	public void shouldBeFindAllContactsByRestaurantLatitudeLongitudeMaxKilometers() throws Exception {
+
+		String result = this.mockMvc.perform(get("/addresses/find/filter/?id=1&lat=-23.6864837&lon=-46.7800381&mx=25")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
+				.getContentAsString();
+
+		Address[] addressesArray = gson.fromJson(result, Address[].class);
+
+		List<Address> addresses = Arrays.asList(addressesArray);
+
+		assertNotNull(addresses);
+		assertNotNull(addresses.size() > 0);
+	}
+
 
 }

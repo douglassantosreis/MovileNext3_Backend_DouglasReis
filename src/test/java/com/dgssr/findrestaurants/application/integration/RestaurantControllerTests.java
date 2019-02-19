@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.controller;
+package com.dgssr.findrestaurants.application.integration;
 
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,14 +23,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.dgssr.findrestaurants.domain.Contact;
+import com.dgssr.findrestaurants.domain.Restaurant;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ContactControllerTests {
+public class RestaurantControllerTests {
 
 	@Autowired
 	private WebApplicationContext wac;
@@ -54,23 +54,35 @@ public class ContactControllerTests {
 
 		Assert.assertNotNull(servletContext);
 		Assert.assertTrue(servletContext instanceof MockServletContext);
-		Assert.assertNotNull(wac.getBean("contactController"));
+		Assert.assertNotNull(wac.getBean("restaurantController"));
 	}
 
 	@Test
-	public void shouldFindAllContacts() throws Exception {
+	public void shouldFindAllRestaurants() throws Exception {
 
-		String result = this.mockMvc.perform(get("/contacts/")).andExpect(status().isOk())
+		String result = this.mockMvc.perform(get("/restaurants/")).andExpect(status().isOk())
 				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
 				.getContentAsString();
 
-		Contact[] contactsArray = gson.fromJson(result, Contact[].class);
+		Restaurant[] restaurantsArray = gson.fromJson(result, Restaurant[].class);
 
-		List<Contact> contacts = Arrays.asList(contactsArray);
+		List<Restaurant> restaurants = Arrays.asList(restaurantsArray);
 
-		assertNotNull(contacts);
-		assertNotNull(contacts.size() > 0);
+		assertNotNull(restaurants);
+		assertNotNull(restaurants.size() > 0);
 
+	}
+
+	@Test
+	public void shouldFindOnRestaurantById() throws Exception {
+
+		String result = this.mockMvc.perform(get("/restaurants/1")).andExpect(status().isOk())
+				.andExpect(content().contentType("application/json;charset=UTF-8")).andReturn().getResponse()
+				.getContentAsString();
+
+		Restaurant restaurant = gson.fromJson(result, Restaurant.class);
+
+		assertNotNull(restaurant);
 	}
 
 }

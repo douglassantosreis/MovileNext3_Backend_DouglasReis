@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.models;
+package com.dgssr.findrestaurants.domain.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

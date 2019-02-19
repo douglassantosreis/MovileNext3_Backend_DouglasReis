@@ -1,11 +1,8 @@
-package com.dgssr.findrestaurants.models;
+package com.dgssr.findrestaurants.domain.model;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
-import java.time.LocalTime;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -101,24 +98,4 @@ public class AddressTests {
 		assertNotNull(address.getRestaurant());
 	}
 	
-	@Test
-	public void shouldBeRestaurantIsOpen() {
-		Address address = new Address();
-		Restaurant restaurant = new Restaurant();
-		restaurant.setOpen(LocalTime.of(0, 1, 0));
-		restaurant.setClose(LocalTime.of(23, 59, 0));
-		address.setRestaurant(restaurant);
-		assertTrue(address.isOpen());
-	}
-	
-	@Test
-	public void shouldBeRestaurantIsClose() {
-		Address address = new Address();
-		Restaurant restaurant = new Restaurant();
-		restaurant.setOpen(LocalTime.of(9, 0, 0));
-		restaurant.setClose(LocalTime.of(9, 2, 0));
-		address.setRestaurant(restaurant);
-		assertFalse(address.isOpen());
-	}
-
 }

@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Restaurant {
+public class Restaurant implements Establishment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,6 +51,11 @@ public class Restaurant {
 
 	public Restaurant() {
 		super();
+	}
+
+	@Override
+	public boolean isOpen() {
+		return this.getOpen().isBefore(LocalTime.now()) && this.getClose().isAfter(LocalTime.now());
 	}
 
 	public Restaurant(Integer id) {

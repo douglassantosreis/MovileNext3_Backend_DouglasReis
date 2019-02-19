@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.exception;
+package com.dgssr.findrestaurants.infrastructure.exception;
 
 import static org.junit.Assert.assertNotNull;
 

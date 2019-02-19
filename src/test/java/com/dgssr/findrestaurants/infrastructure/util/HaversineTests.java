@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.util;
+package com.dgssr.findrestaurants.infrastructure.util;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.dgssr.findrestaurants.infrastructure.utilities.Haversine;
+import com.dgssr.findrestaurants.infrastructure.utilities.HaversineCalc;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -17,7 +17,7 @@ public class HaversineTests {
 	
 	@Test
 	public void shouldBeHaversinIsCreated() {
-		Haversine haversine = new Haversine();
+		HaversineCalc haversine = new HaversineCalc();
 		assertNotNull(haversine);
 	}
 	
@@ -31,7 +31,7 @@ public class HaversineTests {
 		
 		double distanceExpected = 4.186348591166014;
 		
-		double distanceBetween = Haversine.distance(latStart, longStart, latEnd,longEnd);
+		double distanceBetween = new HaversineCalc(latStart, longStart, latEnd,longEnd).distance();
 		
 		assertTrue(distanceBetween == distanceExpected);
 	}
@@ -40,7 +40,7 @@ public class HaversineTests {
 	public void shouldBeCalculateHaversin() {
 		double latitude = -23.6880566;	
 		double haversinExpected = 0.43711115982239584;
-		double haversinCalc = Haversine.haversin(latitude);
+		double haversinCalc = HaversineCalc.haversin(latitude);
 		assertTrue(haversinCalc == haversinExpected);
 	}
 }

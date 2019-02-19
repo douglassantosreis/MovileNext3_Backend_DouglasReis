@@ -1,4 +1,4 @@
-package com.dgssr.findrestaurants.implementation;
+package com.dgssr.findrestaurants.application.implementation;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

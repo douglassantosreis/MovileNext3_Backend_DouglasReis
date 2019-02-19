@@ -1,7 +1,6 @@
-package com.dgssr.findrestaurants.implementation;
+package com.dgssr.findrestaurants.application.implementation;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dgssr.findrestaurants.application.service.implementation.AddressServiceImpl;
 import com.dgssr.findrestaurants.domain.Address;
-import com.dgssr.findrestaurants.domain.InputSearch;
 import com.dgssr.findrestaurants.domain.Restaurant;
 import com.dgssr.findrestaurants.infrastructure.repositories.AddressRepository;
 
@@ -117,46 +115,5 @@ public class AddressServiceImplTests {
 		assertTrue(addresses.isEmpty());
 
 	}
-	
-	@Test
-	public void shouldBeCheckIfRestaurantIsElegibleReturnTrue() {
-		
-		Address addresss = new Address();
-		Restaurant restaurant = new Restaurant(1);
-		restaurant.setOpen(LocalTime.of(0, 1, 0));
-		restaurant.setClose(LocalTime.of(23, 59, 0));
-		addresss.setLatitude(-23.6864837);
-		addresss.setLongitude(-46.7800381);
-		addresss.setRestaurant(restaurant);
-		
-		InputSearch inputSearch = new InputSearch
-				.InputSearchBuilder()
-				.addLatitude(-23.6864837)
-				.addLongitude(-46.7800381)
-				.addMaxKilometers(25)
-				.addRestaurantId(1).build();
 
-		assertTrue(addressServiceImpl.checkIfRestaurantIsElegible(inputSearch, addresss));
-	}
-	
-	@Test
-	public void shouldBeCheckIfRestaurantIsElegibleReturnFalse() {
-		
-		Address addresss = new Address();
-		Restaurant restaurant = new Restaurant(1);
-		restaurant.setOpen(LocalTime.of(1, 0, 0));
-		restaurant.setClose(LocalTime.of(1, 1, 0));
-		addresss.setLatitude(-23.6864837);
-		addresss.setLongitude(-46.7800381);
-		addresss.setRestaurant(restaurant);
-		
-		InputSearch inputSearch = new InputSearch
-				.InputSearchBuilder()
-				.addLatitude(-23.6864837)
-				.addLongitude(-46.7800381)
-				.addMaxKilometers(25)
-				.addRestaurantId(1).build();
-
-		assertFalse(addressServiceImpl.checkIfRestaurantIsElegible(inputSearch, addresss));
-	}
 }

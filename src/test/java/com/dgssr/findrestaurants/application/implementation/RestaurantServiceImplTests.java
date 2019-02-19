@@ -1,9 +1,12 @@
-package com.dgssr.findrestaurants.implementation;
+package com.dgssr.findrestaurants.application.implementation;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -79,6 +82,26 @@ public class RestaurantServiceImplTests {
 
 		restaurantServiceImpl.findById(id);
 
+	}
+	
+	@Test
+	public void shouldBeCheckIfRestaurantIsElegibleReturnTrue() {
+				Restaurant restaurant = new Restaurant(1);
+		restaurant.setOpen(LocalTime.of(0, 1, 0));
+		restaurant.setClose(LocalTime.of(23, 59, 0));
+
+		assertTrue(restaurant.isOpen());
+	}
+	
+	@Test
+	public void shouldBeCheckIfRestaurantIsElegibleReturnFalse() {
+		
+		Restaurant restaurant = new Restaurant(1);
+		restaurant.setOpen(LocalTime.of(1, 0, 0));
+		restaurant.setClose(LocalTime.of(1, 1, 0));
+	
+
+		assertFalse(restaurant.isOpen());
 	}
 
 }

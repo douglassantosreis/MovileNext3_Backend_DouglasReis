@@ -1,6 +1,5 @@
 package com.dgssr.findrestaurants.domain;
 
-import java.time.LocalTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -52,10 +51,6 @@ public class Address {
 
 	public Address() {
 		super();
-	}
-
-	public boolean isOpen() {
-		return restaurant.getOpen().isBefore(LocalTime.now()) && restaurant.getClose().isAfter(LocalTime.now());
 	}
 
 	/**

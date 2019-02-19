@@ -11,7 +11,7 @@ import com.dgssr.findrestaurants.application.service.AddressService;
 import com.dgssr.findrestaurants.domain.Address;
 import com.dgssr.findrestaurants.domain.InputSearch;
 import com.dgssr.findrestaurants.infrastructure.repositories.AddressRepository;
-import com.dgssr.findrestaurants.infrastructure.utilities.Haversine;
+import com.dgssr.findrestaurants.infrastructure.utilities.HaversineCalc;
 
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
 										.addLongitude(longitude)
 										.addMaxKilometers(maxKilometers).build();
 
-		return validateAdressesList(addresses, inputSearch);
+		return transformResult(addresses, inputSearch);
 	}
 
 	@Override
@@ -52,27 +52,27 @@ public class AddressServiceImpl implements AddressService {
 		Optional<List<Address>> addresses = addressRepository.findByRestaurantId(inputSearch.getRestaurantId());
 
 		if (addresses.isPresent()) {
-			return validateAdressesList(addresses.get(), inputSearch);
+			return transformResult(addresses.get(), inputSearch);
 		} else {
 			return new ArrayList<Address>();
 		}
 	}
 
-	public List<Address> validateAdressesList(List<Address> addresses, InputSearch inputSearch) {
+	@Override
+	public List<Address> transformResult(List<Address> addresses, InputSearch inputSearch) {
 
 		List<Address> addressesReturn = new ArrayList<Address>();
+		
 		addresses.forEach(address -> {
-			if (checkIfRestaurantIsElegible(inputSearch, address)) {
+			
+			HaversineCalc haversineCalc = new HaversineCalc(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
+					address.getLongitude());
+			
+			if (address.getRestaurant().isOpen() && (haversineCalc.distance() < inputSearch.getMaxKilometers())) {
 				addressesReturn.add(address);
 			}
 		});
 
 		return addressesReturn;
-
-	}
-
-	public boolean checkIfRestaurantIsElegible(InputSearch inputSearch, Address address) {
-		return (Haversine.distance(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
-				address.getLongitude()) < inputSearch.getMaxKilometers()) && address.isOpen();
 	}
 }
