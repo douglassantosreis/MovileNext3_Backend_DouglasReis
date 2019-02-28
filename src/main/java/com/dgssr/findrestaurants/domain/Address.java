@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,8 +21,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "ADDRESS")
-public class Address {
+public class Address implements Serializable {
 
+	private static final long serialVersionUID = -7831027883612096458L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

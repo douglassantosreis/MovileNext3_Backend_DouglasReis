@@ -65,10 +65,10 @@ public class AddressServiceImpl implements AddressService {
 		
 		addresses.forEach(address -> {
 			
-			HaversineCalc haversineCalc = new HaversineCalc(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
+			double haversineCalc = HaversineCalc.distance(inputSearch.getLatitude(), inputSearch.getLongitude(), address.getLatitude(),
 					address.getLongitude());
 			
-			if (address.getRestaurant().isOpen() && (haversineCalc.distance() < inputSearch.getMaxKilometers())) {
+			if (address.getRestaurant().isOpen() && (haversineCalc < inputSearch.getMaxKilometers())) {
 				addressesReturn.add(address);
 			}
 		});

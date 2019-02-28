@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +19,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Contact {
+public class Contact implements Serializable {
 
+	private static final long serialVersionUID = 7695084435649744886L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

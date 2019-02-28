@@ -31,7 +31,7 @@ public class HaversineTests {
 		
 		double distanceExpected = 4.186348591166014;
 		
-		double distanceBetween = new HaversineCalc(latStart, longStart, latEnd,longEnd).distance();
+		double distanceBetween = HaversineCalc.distance(latStart, longStart, latEnd,longEnd);
 		
 		assertTrue(distanceBetween == distanceExpected);
 	}

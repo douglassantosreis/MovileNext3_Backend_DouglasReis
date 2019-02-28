@@ -1,33 +1,17 @@
 package com.dgssr.findrestaurants.infrastructure.utilities;
 
 public class HaversineCalc {
-	private final int EARTH_RADIUS = 6371;
+	private static final int EARTH_RADIUS = 6371;
 
-	private double startLat;
-	private double startLong;
-	private double endLat;
-	private double endLong;
+	public static double distance(double startLat, double startLong, double endLat, double endLong) {
 
-	public HaversineCalc() {
-		super();
-	}
+		double dLat = Math.toRadians((endLat - startLat));
+		double dLong = Math.toRadians((endLong - startLong));
 
-	public HaversineCalc(double startLat, double startLong, double endLat, double endLong) {
-		this.startLat = startLat;
-		this.startLong = startLong;
-		this.endLat = endLat;
-		this.endLong = endLong;
-	}
+		startLat = Math.toRadians(startLat);
+		endLat = Math.toRadians(endLat);
 
-	public double distance() {
-
-		double dLat = Math.toRadians((this.endLat - this.startLat));
-		double dLong = Math.toRadians((this.endLong - this.startLong));
-
-		this.startLat = Math.toRadians(this.startLat);
-		this.endLat = Math.toRadians(this.endLat);
-
-		double a = haversin(dLat) + Math.cos(this.startLat) * Math.cos(this.endLat) * haversin(dLong);
+		double a = haversin(dLat) + Math.cos(startLat) * Math.cos(endLat) * haversin(dLong);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
 		return EARTH_RADIUS * c;

@@ -1,5 +1,6 @@
 package com.dgssr.findrestaurants.domain;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +24,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class Restaurant implements Establishment {
+public class Restaurant implements Establishment, Serializable {
 
+	private static final long serialVersionUID = 2663456788889381904L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

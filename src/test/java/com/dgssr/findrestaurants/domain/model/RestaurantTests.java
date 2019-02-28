@@ -77,5 +77,13 @@ public class RestaurantTests {
 	}
 	
 	
+	@Test
+	public void shouldBeRestaurantIsOpen(){
+		Restaurant restaurant = new Restaurant();
+		restaurant.setClose(LocalTime.of(0, 1, 0));
+		restaurant.setOpen(LocalTime.of(23, 59, 0));
+		assertTrue(restaurant.isOpen());
+	}
+	
 }
 
