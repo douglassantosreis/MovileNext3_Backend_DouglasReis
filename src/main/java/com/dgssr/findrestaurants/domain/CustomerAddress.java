@@ -1,6 +1,5 @@
 package com.dgssr.findrestaurants.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,13 +14,9 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
-@Table(name = "ADDRESS")
-public class Address implements Serializable {
-
-	private static final long serialVersionUID = -7831027883612096458L;
+@Table(name = "CUSTOMER_ADDRESS")
+public class CustomerAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -36,11 +29,7 @@ public class Address implements Serializable {
 	private double latitude;
 	private double longitude;
 	private String complement;
-	@ManyToOne
-	@JoinColumn(name = "restaurant_id", nullable = false, referencedColumnName = "id")
-	@JsonManagedReference
-	private Restaurant restaurant;
-
+	
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
@@ -50,52 +39,6 @@ public class Address implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
-
-	public Address() {
-		super();
-	}
-
-	/**
-	 * @return the latitude
-	 */
-	public double getLatitude() {
-		return latitude;
-	}
-
-	/**
-	 * @param latitude the latitude to set
-	 */
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	/**
-	 * @return the longitude
-	 */
-	public double getLongitude() {
-		return longitude;
-	}
-
-	/**
-	 * @param longitude the longitude to set
-	 */
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-	/**
-	 * @return the restaurant
-	 */
-	public Restaurant getRestaurant() {
-		return restaurant;
-	}
-
-	/**
-	 * @param restaurant the restaurant to set
-	 */
-	public void setRestaurant(Restaurant restaurant) {
-		this.restaurant = restaurant;
-	}
 
 	/**
 	 * @return the id
@@ -196,6 +139,34 @@ public class Address implements Serializable {
 	}
 
 	/**
+	 * @return the latitude
+	 */
+	public double getLatitude() {
+		return latitude;
+	}
+
+	/**
+	 * @param latitude the latitude to set
+	 */
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	/**
+	 * @return the longitude
+	 */
+	public double getLongitude() {
+		return longitude;
+	}
+
+	/**
+	 * @param longitude the longitude to set
+	 */
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
+
+	/**
 	 * @return the complement
 	 */
 	public String getComplement() {
@@ -209,17 +180,32 @@ public class Address implements Serializable {
 		this.complement = complement;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the createdAt
 	 */
-	@Override
-	public String toString() {
-		return "Address [id=" + id + ", street=" + street + ", number=" + number + ", zipCode=" + zipCode
-				+ ", district=" + district + ", city=" + city + ", country=" + country + ", latitude=" + latitude
-				+ ", longitude=" + longitude + ", complement=" + complement + ", restaurant=" + restaurant
-				+ ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	/**
+	 * @param createdAt the createdAt to set
+	 */
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	/**
+	 * @return the updatedAt
+	 */
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	/**
+	 * @param updatedAt the updatedAt to set
+	 */
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 }
