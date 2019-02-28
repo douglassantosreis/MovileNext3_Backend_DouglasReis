@@ -35,6 +35,9 @@ public class Customer {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
+	
+	public Customer() {
+	}
 
 	public Customer(Integer id) {
 		super();

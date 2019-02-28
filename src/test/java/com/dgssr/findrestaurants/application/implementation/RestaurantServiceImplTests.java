@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dgssr.findrestaurants.application.service.implementation.RestaurantServiceImpl;
 import com.dgssr.findrestaurants.domain.Restaurant;
-import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputRestaurantException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputException;
 import com.dgssr.findrestaurants.infrastructure.exceptions.RestaurantNotFoundException;
 import com.dgssr.findrestaurants.infrastructure.repositories.RestaurantRepository;
 
@@ -68,7 +68,7 @@ public class RestaurantServiceImplTests {
 
 	}
 
-	@Test(expected = InvalidInputRestaurantException.class)
+	@Test(expected = InvalidInputException.class)
 	public void shouldBeFindRestaurantByIdThrowInvalidInputRestaurantException() {
 		restaurantServiceImpl.findById(null);
 	}

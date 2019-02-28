@@ -11,7 +11,7 @@ public interface OrderService {
 
 	public Order findById(Integer orderId);
 	
-	public void save(InputOrder inputOrder);
+	public Order save(InputOrder inputOrder);
 
 
 }

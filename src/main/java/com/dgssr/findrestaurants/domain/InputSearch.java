@@ -2,9 +2,9 @@ package com.dgssr.findrestaurants.domain;
 
 import java.io.Serializable;
 
-import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputSearchAddressException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputException;
 
-public class InputSearch implements Serializable {
+public class InputSearch implements Serializable, Input {
 
 	private static final long serialVersionUID = 2067014375291301982L;
 
@@ -29,9 +29,10 @@ public class InputSearch implements Serializable {
 		return restaurantId;
 	}
 
+	@Override
 	public void checkIfICanContinueUseSearch() {
-		if (latitude == 0 || longitude == 0) {
-			throw new InvalidInputSearchAddressException("Alguns desses parameteros não foram encontrados " + "LATITUDE: "
+		if (latitude == 0 || longitude == 0 || maxKilometers == 0) {
+			throw new InvalidInputException("Alguns desses parameteros não foram encontrados " + "LATITUDE: "
 					+ latitude + " LONGITUDE: " + longitude + " MAXKILOMETERS: " + maxKilometers);
 		}
 
@@ -45,7 +46,7 @@ public class InputSearch implements Serializable {
 
 		public InputSearchBuilder addRestaurantId(Integer restaurantId) {
 			if(restaurantId == null) {
-				throw new InvalidInputSearchAddressException("Informe o id do restaurante");
+				throw new InvalidInputException("Informe o id do restaurante");
 			}
 			this.restaurantId = restaurantId;
 			return this;

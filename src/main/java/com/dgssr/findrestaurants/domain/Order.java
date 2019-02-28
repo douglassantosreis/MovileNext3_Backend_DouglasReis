@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputException;
 import com.dgssr.findrestaurants.infrastructure.statemachine.OrderStates;
 
 @Entity
@@ -43,6 +44,9 @@ public class Order implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
+	
+	public Order() {
+	}
 
 	/**
 	 * @return the id
@@ -147,6 +151,85 @@ public class Order implements Serializable {
 	 */
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public static class OrderBuilder {
+		private Integer id;
+		private BigDecimal price;
+		private OrderStates status;
+		private Integer restaurantId;
+		private Integer customerId;
+		private Date createdAt;
+		private Date updatedAt;
+
+		public OrderBuilder addId(Integer id) {
+			if (id == null) {
+				throw new InvalidInputException("Informe o id da ordem");
+			}
+			this.id = id;
+			return this;
+		}
+		
+		public OrderBuilder addCreatedAt(Date createdAt) {
+			if (createdAt == null) {
+				throw new InvalidInputException("Informe a data de criação");
+			}
+			this.createdAt = createdAt;
+			return this;
+		}
+		
+		public OrderBuilder addUpdatedAt(Date updatedAt) {
+			if (updatedAt == null) {
+				throw new InvalidInputException("Informe a data de atualização");
+			}
+			this.updatedAt = updatedAt;
+			return this;
+		}
+
+		public OrderBuilder addRestaurantId(Integer restaurantId) {
+			if (restaurantId == null) {
+				throw new InvalidInputException("Informe o id do restaurante");
+			}
+			this.restaurantId = restaurantId;
+			return this;
+		}
+
+		public OrderBuilder addPrice(BigDecimal price) {
+			if (price == null) {
+				throw new InvalidInputException("Informe o preço do restaurante");
+			}
+			this.price = price;
+			return this;
+		}
+
+		public OrderBuilder addStatus(OrderStates status) {
+			if (status == null) {
+				throw new InvalidInputException("Informe o status");
+			}
+			this.status = status;
+			return this;
+		}
+
+		public OrderBuilder addCustomerId(Integer customerId) {
+			if (customerId == null) {
+				throw new InvalidInputException("Informe o id do cliente");
+			}
+			this.customerId = customerId;
+			return this;
+		}
+
+		public Order build() {
+			Order order = new Order();
+			order.id = this.id;
+			order.restaurant = new Restaurant(this.restaurantId);
+			order.status = this.status;
+			order.customer = new Customer(this.customerId);;
+			order.price = this.price;
+			order.createdAt = this.createdAt;
+			order.updatedAt = this.updatedAt;
+			return order;
+		}
+
 	}
 
 }

@@ -9,8 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.dgssr.findrestaurants.infrastructure.exceptions.AddressNotFoundException;
 import com.dgssr.findrestaurants.infrastructure.exceptions.ContactNotFoundException;
-import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputRestaurantException;
-import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputSearchAddressException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputException;
 import com.dgssr.findrestaurants.infrastructure.exceptions.RestaurantNotFoundException;
 
 @RunWith(SpringRunner.class)
@@ -27,11 +26,11 @@ public class ExceptionsTests {
 	}
 	@Test
 	public void shouldBeInvalidInputRestaurantExceptionIsCreated() {
-		assertNotNull(new InvalidInputRestaurantException("Exception"));
+		assertNotNull(new InvalidInputException("Exception"));
 	}
 	@Test
-	public void shouldBeInvalidInputSearchAddressExceptionIsCreated() {
-		assertNotNull(new InvalidInputSearchAddressException("Exception"));
+	public void shouldBeInvalidInputExceptionIsCreated() {
+		assertNotNull(new InvalidInputException("Exception"));
 	}
 	@Test
 	public void shouldBeRestaurantNotFoundExceptionIsCreated() {

@@ -39,6 +39,9 @@ public class CustomerAddress {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
+	
+	public CustomerAddress() {
+	}
 
 	/**
 	 * @return the id

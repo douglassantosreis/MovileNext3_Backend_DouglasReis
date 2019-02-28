@@ -22,6 +22,7 @@ public class OrderStateMachine extends EnumStateMachineConfigurerAdapter<OrderSt
         states
             .withStates()
                 .initial(OrderStates.OPEN)
+                .end(OrderStates.DELIVERED)
                 .states(EnumSet.allOf(OrderStates.class));
     }
 
@@ -30,8 +31,19 @@ public class OrderStateMachine extends EnumStateMachineConfigurerAdapter<OrderSt
             throws Exception {
         transitions
             .withExternal()
-                .source(OrderStates.OPEN).target(OrderStates.OPEN)
-                .event(OrderEvents.OPEN);
+                .source(OrderStates.OPEN).target(OrderStates.OPEN).event(OrderEvents.OPEN)
+                .and()
+            .withExternal()
+            	.source(OrderStates.IN_ANALYSIS).target(OrderStates.PAYMENT_ACCEPT).event(OrderEvents.ROUTE)
+            	.and()
+            .withExternal()
+            	.source(OrderStates.IN_ANALYSIS).target(OrderStates.PAYMENT_REJECTED).event(OrderEvents.CANCELED)
+            	.and()
+            .withExternal()
+                .source(OrderStates.IN_ANALYSIS).target(OrderStates.ON_ROUTE).event(OrderEvents.ROUTE)
+                .and()
+            .withExternal()
+                .source(OrderStates.ON_ROUTE).target(OrderStates.DELIVERED).event(OrderEvents.CLOSED);
     }
     @Override
 	public void configure(StateMachineConfigurationConfigurer<OrderStates, OrderEvents> config) throws Exception {

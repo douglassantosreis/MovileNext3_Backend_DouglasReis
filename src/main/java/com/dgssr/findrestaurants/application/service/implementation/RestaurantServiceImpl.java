@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.dgssr.findrestaurants.application.service.RestaurantService;
 import com.dgssr.findrestaurants.domain.Restaurant;
-import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputRestaurantException;
+import com.dgssr.findrestaurants.infrastructure.exceptions.InvalidInputException;
 import com.dgssr.findrestaurants.infrastructure.exceptions.RestaurantNotFoundException;
 import com.dgssr.findrestaurants.infrastructure.repositories.RestaurantRepository;
 
@@ -27,7 +27,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 	public Restaurant findById(Integer restaurantId) {
 
 		if (restaurantId == null)
-			throw new InvalidInputRestaurantException("Necessário passar um código de restaurante");
+			throw new InvalidInputException("Necessário passar um código de restaurante");
 		
 		Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 

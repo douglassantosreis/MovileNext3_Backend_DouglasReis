@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,8 +31,7 @@ public class OrderController {
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> save() {
-		orderService.save(new InputOrder());
-		return ResponseEntity.ok().build();
+	public @ResponseBody ResponseEntity<?> save(@RequestBody InputOrder inputOrder) {
+		return ResponseEntity.ok(orderService.save(inputOrder));
 	}
 }
